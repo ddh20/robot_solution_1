@@ -1,6 +1,6 @@
 # robot_solution_1
-Sandbox for create a simple robot solution.
+Sandbox for creating a simple robot solution.
 
 # Getting Started
-Repository: https://github.com/ddh20/robot_solution_1
+Repository: https://github.com/ddh20/robot_solution_1 <br>
 Building the Docker Container: `docker build --no-cache --platform linux/amd64 -t ros2-dev .`
