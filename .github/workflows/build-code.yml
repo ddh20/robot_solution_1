@@ -21,7 +21,7 @@ jobs:
           - name: Download Docker image artifact
             uses: actions/download-artifact@v4
             with:
-              name: docker-image
+              name: ${{ inputs.image_name }}:${{ inputs.version_tag }}
               path: .
 
           - name: Load Docker image
