@@ -10,6 +10,7 @@ jobs:
       version_tag: ${{ github.sha }} # Use a GitHub context for the version tag
     secrets: inherit # Pass all secrets from the caller workflow to the called workflow.
   build_code:
+    needs: build_docker_image # Ensure the Docker image is built before building the code
     uses: ./.github/workflows/build-code.yml # Call the reusable workflow
     with:
       image_name: ros2_dev # Pass inputs to the reusable workflow
