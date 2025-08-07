@@ -18,7 +18,10 @@ jobs:
     build_code:
         runs-on: ubuntu-latest
         container:
-          image: ${{ inputs.image_name }}:${{ inputs.version_tag || 'latest' }}
+          image: ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ inputs.version_tag || 'latest' }}
+          credentials:
+             username: ${{ github.actor }}
+             password: ${{ secrets.GITHUB_TOKEN }}
         
         steps:
         - uses: actions/checkout@v3
