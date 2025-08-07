@@ -17,7 +17,6 @@ on:
 jobs:
     build_code:
         runs-on: ubuntu-latest
-        container: ${{ inputs.image_name }}:${{ inputs.version_tag }} # Use the image loaded in this job
         steps:
           - name: Download Docker image artifact
             uses: actions/download-artifact@v4
@@ -31,7 +30,11 @@ jobs:
           - name: Checkout code
             uses: actions/checkout@v4
 
-          - name: Build code inside container
+          - name: Build code inside Docker container
             run: |
-              # Your build commands here, e.g.,
-              echo "Building code with image ${{ inputs.image_name }}:${{ inputs.version_tag }}"
+              docker run --rm \
+                -v "$PWD:/workspace" \
+                -w /workspace \
+                ${{ inputs.image_name }}:${{ inputs.version_tag }} \
+                bash -c "echo 'Building code with image ${{ inputs.image_name }}:${{ inputs.version_tag }}'; # Your build commands here"
+                ls -la /workspace
