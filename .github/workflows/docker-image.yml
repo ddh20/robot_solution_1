@@ -15,7 +15,7 @@ on:
         default: 'latest'
 
 jobs:
-  build-docker-image:
+  build_docker_image:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code

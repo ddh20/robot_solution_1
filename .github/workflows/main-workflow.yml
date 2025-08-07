@@ -3,7 +3,7 @@ name: Main Application Build and Deploy
 on: [push] # Trigger the workflow on every push to any branch.
 
 jobs:
-  build_image:
+  build_docker_image:
     uses: ./.github/workflows/docker-image.yml # Call the reusable workflow
     with:
       image_name: ros2_dev # Pass inputs to the reusable workflow
