@@ -37,4 +37,5 @@ jobs:
                 -w /ros2_ws \
                 ${{ inputs.image_name }}-${{ inputs.version_tag }} \
                 bash -c "echo 'Building code with image ${{ inputs.image_name }}-${{ inputs.version_tag }}'; # Your build commands here"
-                ls -la /ros2_ws
+                ls -la .
+                ls -la ../
