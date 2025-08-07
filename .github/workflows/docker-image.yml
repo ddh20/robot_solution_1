@@ -26,10 +26,10 @@ jobs:
           context: . # Path to your Dockerfile, typically the root of your repo
           push: false # Do not push to a registry yet
           tags: ${{ inputs.image_name }}:${{ inputs.version_tag }}
-          outputs: type=docker,dest=/tmp/my-repo-image.tar # Export the image as a tar archive
+          outputs: type=docker,dest=/tmp/${{ inputs.image_name }}:${{ inputs.version_tag }}.tar # Export the image as a tar archive
 
       - name: Upload Docker image artifact
         uses: actions/upload-artifact@v4
         with:
-          name: docker-image-artifact
-          path: /tmp/my-repo-image.tar
+          name: ${{ inputs.image_name }}:${{ inputs.version_tag }}-artifact
+          path: /tmp/${{ inputs.image_name }}:${{ inputs.version_tag }}.tar
