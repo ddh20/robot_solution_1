@@ -1,18 +1,23 @@
-name: Docker Image CI
+name: Docker Image Build
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      imageName:
+        description: 'Name of the Docker image'
+        required: true
+        default: 'my-image'
+      versionTag:
+        description: 'Version tag for the image'
+        required: true
+        default: 'latest'
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - uses: actions/checkout@v2
+      
+      - name: Build Docker image
+        run: |
+          docker build -t ${{ inputs.imageName }}:${{ inputs.versionTag }} .
