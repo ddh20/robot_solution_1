@@ -1,22 +1,24 @@
 name: Build Code
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      imageName:
+      image_name:
         description: 'Name of the Docker image'
         required: true
+        type: string
         default: 'my-image'
-      versionTag:
+      version_tag:
         description: 'Version tag for the image'
         required: true
+        type: string
         default: 'latest'
         
 jobs:
     build_code:
         runs-on: ubuntu-latest
         container:
-          image: ghcr.io/${{ github.repository }}:${{ inputs.versionTag || 'latest' }}
+          image: ghcr.io/${{ inputs.image_name }}:${{ inputs.version_tag || 'latest' }}
         
         steps:
         - uses: actions/checkout@v3

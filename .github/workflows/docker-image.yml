@@ -1,15 +1,17 @@
 name: Docker Image Build
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      imageName:
+      image_name:
         description: 'Name of the Docker image'
         required: true
+        type: string
         default: 'my-image'
-      versionTag:
+      version_tag:
         description: 'Version tag for the image'
         required: true
+        type: string
         default: 'latest'
 
 jobs:
@@ -20,4 +22,4 @@ jobs:
       
       - name: Build Docker image
         run: |
-          docker build -t ${{ inputs.imageName }}:${{ inputs.versionTag }} .
+          docker build -t ${{ inputs.image_name }}:${{ inputs.version_tag }} .
