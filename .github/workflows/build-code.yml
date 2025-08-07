@@ -21,7 +21,7 @@ jobs:
           - name: Download Docker image artifact
             uses: actions/download-artifact@v4
             with:
-              name: ${{ inputs.image_name }}:${{ inputs.version_tag }}
+              name: ${{ inputs.image_name }}-${{ inputs.version_tag }}
               path: .
 
           - name: Load Docker image
@@ -35,6 +35,6 @@ jobs:
               docker run --rm \
                 -v "$PWD:/workspace" \
                 -w /workspace \
-                ${{ inputs.image_name }}:${{ inputs.version_tag }} \
-                bash -c "echo 'Building code with image ${{ inputs.image_name }}:${{ inputs.version_tag }}'; # Your build commands here"
+                ${{ inputs.image_name }}-${{ inputs.version_tag }} \
+                bash -c "echo 'Building code with image ${{ inputs.image_name }}-${{ inputs.version_tag }}'; # Your build commands here"
                 ls -la /workspace
