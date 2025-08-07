@@ -23,13 +23,10 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t ${{ inputs.image_name }}:${{ inputs.version_tag }} .
-          - name: Save Docker image
-            run: |
-              mkdir -p image-artifact
-              docker save ${{ inputs.image_name }}:${{ inputs.version_tag }} > image-artifact/docker-image.tar
-          
-          - name: Upload Docker image artifact
-            uses: actions/upload-artifact@v2
-            with:
-              name: docker-image
-              path: image-artifact/docker-image.tar
+      - name: Push Docker image
+        run: |
+          echo "Pushing Docker image ${{ inputs.image_name }}:${{ inputs.version_tag }}"
+          docker push ${{ inputs.image_name }}:${{ inputs.version_tag }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
