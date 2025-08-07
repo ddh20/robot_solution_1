@@ -18,7 +18,7 @@ jobs:
     build_code:
         runs-on: ubuntu-latest
         container:
-          image: ghcr.io/${{ inputs.image_name }}:${{ inputs.version_tag || 'latest' }}
+          image: docker.io/library/${{ inputs.image_name }}:${{ inputs.version_tag || 'latest' }}
         
         steps:
         - uses: actions/checkout@v3
