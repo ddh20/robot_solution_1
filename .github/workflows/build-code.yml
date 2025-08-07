@@ -17,20 +17,21 @@ on:
 jobs:
     build_code:
         runs-on: ubuntu-latest
-        
+        container: ${{ inputs.image_name }}-${{ inputs.version_tag }}-image # Use the image loaded in this job
         steps:
-        - name: Download Docker image artifact
-          uses: actions/download-artifact@v4
-          with:
-            name: ${{ inputs.image_name }}:${{ inputs.version_tag }}-artifact
-            path: /tmp
+          - name: Download Docker image artifact
+            uses: actions/download-artifact@v4
+            with:
+              name: docker-image
+              path: .
 
-        - name: Load Docker image
-          run: |
-            docker load < /tmp/${{ inputs.image_name }}:${{ inputs.version_tag }}-image.tar
+          - name: Load Docker image
+            run: docker load -i ${{ inputs.image_name }}-${{ inputs.version_tag }}-image.tar
 
-        - uses: actions/checkout@v3
-          
-        - name: Build code
-          run: |
-            echo "Add your build commands here"
+          - name: Checkout code
+            uses: actions/checkout@v4
+
+          - name: Build code inside container
+            run: |
+              # Your build commands here, e.g.,
+              echo "Building code with image ${{ inputs.image_name }}:${{ inputs.version_tag }}"

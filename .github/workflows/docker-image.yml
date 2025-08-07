@@ -15,21 +15,20 @@ on:
         default: 'latest'
 
 jobs:
-  build:
+  build-docker-image:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      
+      - name: Checkout code
+        uses: actions/checkout@v4
+
       - name: Build Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: . # Path to your Dockerfile, typically the root of your repo
-          push: false # Do not push to a registry yet
-          tags: ${{ inputs.image_name }}:${{ inputs.version_tag }}
-          outputs: type=docker,dest=/tmp/${{ inputs.image_name }}:${{ inputs.version_tag }}.tar # Export the image as a tar archive
+        run: docker build -t ${{ inputs.image_name }}-${{ inputs.version_tag }}-image .
+
+      - name: Save Docker image
+        run: docker save ${{ inputs.image_name }}-${{ inputs.version_tag }}-image -o ${{ inputs.image_name }}-${{ inputs.version_tag }}-image.tar
 
       - name: Upload Docker image artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ inputs.image_name }}:${{ inputs.version_tag }}-artifact
-          path: /tmp/${{ inputs.image_name }}:${{ inputs.version_tag }}.tar
+          name: ${{ inputs.image_name }}-${{ inputs.version_tag }}-image
+          path: ${{ inputs.image_name }}-${{ inputs.version_tag }}-image.tar
